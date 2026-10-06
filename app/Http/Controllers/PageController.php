@@ -11,6 +11,35 @@ class PageController extends Controller
         return view('home');
     }
 
+    public function heroVideo()
+    {
+        $path = storage_path('media/video/herovideo.mp4');
+
+        abort_unless(is_file($path), 404);
+
+        return response()->file($path, [
+            'Content-Type' => 'video/mp4',
+            'Content-Disposition' => 'inline',
+        ]);
+    }
+
+    /**
+     * Stream the ambient train sound used by the weekly-test section.
+     * Served through a controller route (no static path, no download UI)
+     * so the file cannot be fetched by casually browsing the site.
+     */
+    public function trainSound()
+    {
+        $path = storage_path('media/audio/train-sound.mp3');
+
+        abort_unless(is_file($path), 404);
+
+        return response()->file($path, [
+            'Content-Type' => 'audio/mpeg',
+            'Content-Disposition' => 'inline',
+        ]);
+    }
+
     public function about()
     {
         return view('about');

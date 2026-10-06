@@ -152,6 +152,78 @@
         });
     }
 
+    /* ---------- hero video: pause when hero scrolls off-screen ---------- */
+    var heroVideo = document.querySelector('.hero-visual video');
+    var heroSection = document.querySelector('.hero');
+    var heroVisible = true;
+    if (heroVideo && heroSection && 'IntersectionObserver' in window) {
+        var heroIO = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                heroVisible = entry.isIntersecting;
+                if (heroVisible && !document.hidden) {
+                    var p = heroVideo.play();
+                    if (p && p.catch) { p.catch(function () {}); }
+                } else {
+                    heroVideo.pause();
+                }
+            });
+        }, { threshold: 0 });
+        heroIO.observe(heroSection);
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                heroVideo.pause();
+            } else if (heroVisible) {
+                var p = heroVideo.play();
+                if (p && p.catch) { p.catch(function () {}); }
+            }
+        });
+    }
+
+    /* ---------- train sound: loop while #weekly-test is on-screen ---------- */
+    var trainSound = document.getElementById('trainSound');
+    var trainSection = document.getElementById('weekly-test');
+    var trainVisible = false;
+    var trainPlay = function () {
+        if (!trainSound || !trainVisible || document.hidden) return;
+        var p = trainSound.play();
+        if (p && p.catch) { p.catch(function () {}); } /* blocked until first user gesture */
+    };
+    if (trainSound && trainSection && 'IntersectionObserver' in window) {
+        trainSound.volume = 0.4;
+
+        var trainIO = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                trainVisible = entry.isIntersecting;
+                if (trainVisible) {
+                    trainPlay();
+                } else {
+                    trainSound.pause();
+                }
+            });
+        }, { threshold: 0 });
+        trainIO.observe(trainSection);
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                trainSound.pause();
+            } else {
+                trainPlay();
+            }
+        });
+
+        /* browsers block unmuted audio until the first click / keypress */
+        var unlockTrain = function () {
+            trainPlay();
+            document.removeEventListener('pointerdown', unlockTrain);
+            document.removeEventListener('keydown', unlockTrain);
+            document.removeEventListener('touchend', unlockTrain);
+        };
+        document.addEventListener('pointerdown', unlockTrain);
+        document.addEventListener('keydown', unlockTrain);
+        document.addEventListener('touchend', unlockTrain);
+    }
+
     /* ---------- icons ---------- */
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
         window.lucide.createIcons({ attrs: { 'stroke-width': 1.8 } });

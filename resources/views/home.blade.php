@@ -1,7 +1,8 @@
 @extends('layout.app')
 
-@section('title', 'AvianEdu — Research-led study material, mock papers & assessments')
-@section('description', 'AvianEdu crafts curriculum-aligned study material, mock papers, test series and student accessories for schools, online educators and competition organisers. A venture of Aviansys Technologies.')
+@section('title', 'Educational Content Development & Assessment Solutions | AvianEdu')
+@section('description', 'AvianEdu helps schools, publishers, coaching institutes and EdTech platforms across India with curriculum-aligned content, question banks, mock tests, assessment consulting and white-label learning solutions.')
+@section('canonical', url('/'))
 
 @section('content')
 
@@ -12,22 +13,22 @@
 
     <div class="container hero-grid">
         <div class="hero-copy">
-            <span class="eyebrow"><i data-lucide="sparkles"></i> From aerospace labs to exam halls</span>
+            <span class="eyebrow"><i data-lucide="graduation-cap"></i> Educational content development · India</span>
 
-            <h1>Study material that teaches.<br>Mock papers that <span class="accent">predict</span>.</h1>
+            <h1>India's trusted partner for educational content, <span class="accent">question banks</span> &amp; assessment solutions</h1>
 
             <p class="hero-sub">
-                AvianEdu is the education venture of Aviansys Technologies. We research syllabi, write
-                original content from scratch, and supply it to schools, online educators and competition
-                organisers — with the same rigour we once reserved for flight systems.
+                AvianEdu partners with schools, publishers, coaching institutes and EdTech platforms
+                across India to create curriculum-aligned learning content, question banks, mock tests
+                and assessment frameworks — CBSE, ICSE, state boards and NEP&nbsp;2020 included.
             </p>
 
             <div class="hero-ctas">
-                <a href="{{ route('services') }}" class="btn btn-primary btn-lg">
-                    Explore our services <i data-lucide="arrow-right" class="arr"></i>
+                <a href="{{ route('contact') }}" class="btn btn-primary btn-lg">
+                    Discuss your project <i data-lucide="arrow-right" class="arr"></i>
                 </a>
                 <a href="{{ route('contact') }}" class="btn btn-outline btn-lg">
-                    <i data-lucide="message-circle"></i> Talk to our team
+                    <i data-lucide="file-check-2"></i> Request sample content
                 </a>
             </div>
 
@@ -54,16 +55,16 @@
                     <span>institutional partners</span>
                 </div>
                 <div class="hero-stat">
-                    <b data-count-to="8" data-count-suffix="">8</b>
+                    <b data-count-to="12" data-count-suffix="">12</b>
                     <span>boards &amp; curricula</span>
                 </div>
             </div>
         </div>
 
         <div class="hero-visual">
-            <img class="main-img"
-                 src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1100&q=80"
-                 alt="Students collaborating over study material with laptops and notebooks">
+            <video class="main-img" autoplay muted loop playsinline preload="auto" disablePictureInPicture disableRemotePlayback draggable="false" oncontextmenu="return false" aria-hidden="true" tabindex="-1">
+                <source src="{{ route('media.hero-video') }}" type="video/mp4">
+            </video>
 
             <div class="float-card fc-1">
                 <span class="tick"><i data-lucide="badge-check"></i></span>
@@ -78,6 +79,16 @@
                 Sample chapter in 48 hrs
             </div>
         </div>
+    </div>
+</section>
+
+{{-- ============ TRUST BAR ============ --}}
+<section aria-label="Why partners trust AvianEdu" style="padding:22px 0 4px">
+    <div class="container trust-bar">
+        <div class="trust-item"><i data-lucide="badge-check"></i> Curriculum-aligned resources</div>
+        <div class="trust-item"><i data-lucide="layers-3"></i> Multi-level quality review</div>
+        <div class="trust-item"><i data-lucide="languages"></i> English &amp; Hindi content expertise</div>
+        <div class="trust-item"><i data-lucide="zap"></i> Fast turnaround, scalable delivery</div>
     </div>
 </section>
 
@@ -113,6 +124,7 @@
 
 {{-- ============ WEEKLY MATHS TEST — 7-DAY CYCLE ============ --}}
 <section class="section section--tint" id="weekly-test">
+    <audio id="trainSound" src="{{ route('media.train-sound') }}" loop preload="none" aria-hidden="true"></audio>
     <div class="maths-drift" aria-hidden="true">
         <div class="drift-row row-a">
             <div class="drift-track">
@@ -138,10 +150,10 @@
     <div class="container">
         <div class="section-head center reveal">
             <span class="eyebrow"><i data-lucide="calendar-check-2"></i> Weekly test program</span>
-            <h2>Six days to learn. One day to <span class="text-gradient">prove it</span>.</h2>
+            <h2>Five days to learn. One day to <span class="text-gradient">prove it</span>.</h2>
             <p>
-                Our flagship 7-day Maths track for CBSE students (classes 1–9) — daily material,
-                solved examples and realtime tutors for six days, then a live global online exam
+                Our flagship 6-day Maths track for CBSE students (classes 1–9) — daily material,
+                solved examples and realtime tutors for Five days, then a live global online exam
                 on the seventh.
             </p>
         </div>
@@ -230,17 +242,17 @@
                 <span class="card-glyph" aria-hidden="true">&beta;</span>
                 <span class="bogies" aria-hidden="true"><i></i><i></i></span>
             </div>
-            <div class="day-card">
+            <!-- <div class="day-card">
                 <span class="day-no">Day 6</span>
                 <div class="day-icon"><i data-lucide="party-popper"></i></div>
                 <h4>Revise &amp; play</h4>
                 <p>Revision with fun activities</p>
                 <span class="card-glyph" aria-hidden="true">&Delta;</span>
                 <span class="bogies" aria-hidden="true"><i></i><i></i></span>
-            </div>
+            </div> -->
             <div class="day-card exam">
                 <span class="chimney" aria-hidden="true"><i></i><i></i><i></i></span>
-                <span class="day-no">Day 7</span>
+                <span class="day-no">Day 6</span>
                 <div class="day-icon"><i data-lucide="globe-2"></i></div>
                 <h4>Live global exam</h4>
                 <p>Quiz + written questions, online</p>
@@ -300,27 +312,28 @@
     </div>
 </section>
 
-{{-- ============ WHO WE ARE ============ --}}
+{{-- ============ WHO WE ARE / ABOUT ============ --}}
 <section class="section">
     <div class="container split flip">
         <div class="split-media reveal">
             <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1000&q=80"
-                 alt="Students taking notes in a lecture hall">
+                 alt="Educators and students working through study material in a lecture hall">
             <div class="stamp"><b>3&times;</b><span>reviewed before release</span></div>
         </div>
 
         <div class="split-body reveal" data-delay="1">
-            <span class="eyebrow"><i data-lucide="fingerprint"></i> Who we are</span>
-            <h2>A research studio that speaks <span class="text-gradient">fluent syllabus</span>.</h2>
+            <span class="eyebrow"><i data-lucide="fingerprint"></i> About AvianEdu</span>
+            <h2>Built by educators. Backed by <span class="text-gradient">process</span>.</h2>
             <p class="lead" style="margin-top:14px">
-                AvianEdu began inside Aviansys Technologies — an aerospace and embedded engineering
-                company that builds avionics boxes and, unexpectedly, one of the better exam platforms
-                you haven't heard of yet.
+                Good learning content starts with understanding how students learn and how teachers
+                teach — not with typing out chapters. AvianEdu began inside Aviansys Technologies,
+                bringing an engineering culture of precision into Indian classrooms.
             </p>
             <p style="margin-top:12px">
-                Our writers are subject teachers and postgraduates. Our reviewers are people who have
-                set papers for boards and Olympiads. And our process borrows from engineering:
-                requirements first (your syllabus), prototypes (sample chapter), then sign-off.
+                Our writers are subject teachers and postgraduates; our reviewers have set papers for
+                boards and Olympiads. Every project moves through curriculum research, academic
+                planning, development and multi-stage quality checks — whether it is a single workbook
+                or a complete assessment programme for a school chain, publisher or EdTech platform.
             </p>
 
             <ul class="check-list">
@@ -334,46 +347,86 @@
     </div>
 </section>
 
-{{-- ============ WHAT WE CREATE ============ --}}
+{{-- ============ SERVICES ============ --}}
 <section class="section section--tint">
     <div class="container">
         <div class="section-head center reveal">
-            <span class="eyebrow"><i data-lucide="package-open"></i> What we create</span>
-            <h2>Three product families, one quality bar</h2>
-            <p>Digital or printed, branded as yours or ours — the editorial process behind each is identical.</p>
+            <span class="eyebrow"><i data-lucide="package-open"></i> Our services</span>
+            <h2>Educational content services for modern India</h2>
+            <p>Curriculum-aligned content, question banks, mock tests and assessment consulting for schools, publishers, coaching institutes and EdTech platforms.</p>
         </div>
 
         <div class="grid-3">
             <div class="card reveal">
                 <div class="icon-badge"><i data-lucide="book-open-text"></i></div>
-                <h3>Study material</h3>
+                <h3>Curriculum &amp; content development</h3>
                 <p>
-                    Modules, worksheets, revision notes, lab manuals and answer keys for classes 1–12
-                    and entrance aspirants — mapped chapter-by-chapter to your board.
+                    High-quality educational content tailored to your board and learning objectives —
+                    CBSE and ICSE resources, state-board material, NEP&nbsp;2020-aligned content,
+                    study notes, workbooks, lab manuals and teacher resources for classes 1–12.
                 </p>
-                <span class="tag">Print + digital</span>
+                <span class="tag">CBSE · ICSE · State boards · NEP 2020</span>
             </div>
 
             <div class="card reveal" data-delay="1">
                 <div class="icon-badge"><i data-lucide="file-check-2"></i></div>
-                <h3>Mock papers &amp; test series</h3>
+                <h3>Question bank &amp; assessment development</h3>
                 <p>
-                    Chapter tests, pre-boards, weekly series and full-length mocks with solutions,
-                    delivered as PDF, CSV or SCORM — ready for print or your platform.
+                    Chapter-wise question banks, unit and periodic tests, board-preparation papers,
+                    competitive-exam questions and full mock-test series — academically balanced,
+                    blueprint-mapped and delivered as PDF, CSV or SCORM.
                 </p>
-                <span class="tag">72-hr express option</span>
+                <span class="tag">Question banks · Mock tests · Test series</span>
+            </div>
+
+            <div class="card reveal" data-delay="2">
+                <div class="icon-badge"><i data-lucide="monitor-smartphone"></i></div>
+                <h3>Content solutions for EdTech platforms</h3>
+                <p>
+                    Digital-first content for LMS platforms, learning apps, online courses and blended
+                    classrooms — structured for video lessons, online assessments, practice modules
+                    and interactive learning journeys.
+                </p>
+                <span class="tag">LMS · Apps · Online courses</span>
+            </div>
+
+            <div class="card reveal">
+                <div class="icon-badge"><i data-lucide="stamp"></i></div>
+                <h3>White-label educational content</h3>
+                <p>
+                    Launch products under your own brand while we handle the academic development
+                    behind the scenes — ideal for publishers, coaching institutes, YouTube educators
+                    and EdTech startups scaling without diluting quality.
+                </p>
+                <span class="tag">Your brand, our byline — nowhere</span>
+            </div>
+
+            <div class="card reveal" data-delay="1">
+                <div class="icon-badge"><i data-lucide="clipboard-check"></i></div>
+                <h3>Assessment consulting</h3>
+                <p>
+                    Stronger evaluation systems through data-driven assessment planning: paper
+                    blueprints, difficulty mapping, academic audits, syllabus alignment and review
+                    processes built around your institution.
+                </p>
+                <span class="tag">Blueprints · Difficulty mapping · Audits</span>
             </div>
 
             <div class="card reveal" data-delay="2">
                 <div class="icon-badge"><i data-lucide="pencil-ruler"></i></div>
-                <h3>Student accessories</h3>
+                <h3>Educational resource kits</h3>
                 <p>
-                    Exam kits, geometry sets, branded stationery, OMR clipboards and event kits for
-                    Olympiad day — small batches, your identity on the box.
+                    Student resource kits, examination kits, geometry sets, branded stationery and
+                    school identity materials — small batches, your identity on the box,
+                    delivered before term starts.
                 </p>
-                <span class="tag">Low MOQs</span>
+                <span class="tag">Kits · Stationery · School branding</span>
             </div>
         </div>
+
+        <p style="text-align:center;margin-top:30px" class="reveal">
+            <a href="{{ route('services') }}" class="link-arrow">See the full service menu <i data-lucide="arrow-right"></i></a>
+        </p>
     </div>
 </section>
 
@@ -401,65 +454,68 @@
     </div>
 </section>
 
-{{-- ============ WHO WE SERVE ============ --}}
+{{-- ============ INDUSTRIES WE SERVE ============ --}}
 <section class="section section--tint">
     <div class="container">
         <div class="section-head center reveal">
-            <span class="eyebrow"><i data-lucide="handshake"></i> Who we serve</span>
-            <h2>Built for the people behind the paper</h2>
-            <p>Three kinds of partners, three very different conversations — all welcome here.</p>
+            <span class="eyebrow"><i data-lucide="handshake"></i> Who we work with</span>
+            <h2>Supporting India's diverse education ecosystem</h2>
+            <p>Five kinds of partners, five very different conversations — all welcome here.</p>
         </div>
 
         <div class="grid-3">
-            <div class="card media-card reveal">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80"
-                         alt="A bright classroom with desks ready for students">
-                    <span class="tag">Schools &amp; institutions</span>
-                </div>
-                <div class="card-body">
-                    <h3>Educational institutions</h3>
-                    <p>
-                        Schools, coaching institutes and college departments use us for pre-boards,
-                        worksheets, lab manuals and revision modules — printed with their branding,
-                        delivered before term starts.
-                    </p>
-                    <a href="{{ route('contact') }}" class="link-arrow" style="margin-top:16px">Plan your session <i data-lucide="arrow-right"></i></a>
-                </div>
+            <div class="card reveal">
+                <div class="icon-badge"><i data-lucide="school"></i></div>
+                <h3>Schools</h3>
+                <p>
+                    Learning resources, question papers, worksheets, pre-boards and academic support
+                    for CBSE, ICSE and state-board schools — printed with your branding, delivered
+                    before term starts.
+                </p>
+                <a href="{{ route('contact') }}" class="link-arrow" style="margin-top:14px">Plan your session <i data-lucide="arrow-right"></i></a>
             </div>
 
-            <div class="card media-card reveal" data-delay="1">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=800&q=80"
-                         alt="An online educator working on a laptop with study notes">
-                    <span class="tag">Creators &amp; coaches</span>
-                </div>
-                <div class="card-body">
-                    <h3>Online educators</h3>
-                    <p>
-                        You teach brilliantly; writing 2,000 fresh questions a month is a terrible use of
-                        your nights. We supply white-label question banks, PDF worksheets and quiz scripts
-                        in your voice.
-                    </p>
-                    <a href="{{ route('contact') }}" class="link-arrow" style="margin-top:16px">Fuel your channel <i data-lucide="arrow-right"></i></a>
-                </div>
+            <div class="card reveal" data-delay="1">
+                <div class="icon-badge"><i data-lucide="book-copy"></i></div>
+                <h3>Publishers</h3>
+                <p>
+                    Textbook development, editorial support, supplementary learning material and
+                    assessment sections — academic development that keeps your publication schedule
+                    and your standard intact.
+                </p>
+                <a href="{{ route('contact') }}" class="link-arrow" style="margin-top:14px">Discuss a title <i data-lucide="arrow-right"></i></a>
             </div>
 
-            <div class="card media-card reveal" data-delay="2">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80"
-                         alt="A candidate writing a competitive examination">
-                    <span class="tag">Contest organisers</span>
-                </div>
-                <div class="card-body">
-                    <h3>Competition agencies</h3>
-                    <p>
-                        Olympiads, scholarship tests and online contests run on our paper-setting,
-                        moderation and evaluation support — including tie-breaker rounds when 40,000
-                        students are tied on marks.
-                    </p>
-                    <a href="{{ route('contact') }}" class="link-arrow" style="margin-top:16px">Design your contest <i data-lucide="arrow-right"></i></a>
-                </div>
+            <div class="card reveal" data-delay="2">
+                <div class="icon-badge"><i data-lucide="target"></i></div>
+                <h3>Coaching institutes</h3>
+                <p>
+                    Test series, chapter-wise practice questions, revision material and
+                    competitive-exam preparation resources — JEE, NEET, SSC, banking and CUET
+                    patterns included.
+                </p>
+                <a href="{{ route('contact') }}" class="link-arrow" style="margin-top:14px">Fuel your test series <i data-lucide="arrow-right"></i></a>
+            </div>
+
+            <div class="card reveal">
+                <div class="icon-badge"><i data-lucide="monitor-smartphone"></i></div>
+                <h3>EdTech platforms</h3>
+                <p>
+                    Digital-ready content, question banks, assessments and white-label learning
+                    solutions built for LMS platforms, mobile apps and online courses — in English
+                    and Hindi.
+                </p>
+                <a href="{{ route('contact') }}" class="link-arrow" style="margin-top:14px">Build with us <i data-lucide="arrow-right"></i></a>
+            </div>
+
+            <div class="card reveal" data-delay="1">
+                <div class="icon-badge"><i data-lucide="rocket"></i></div>
+                <h3>Educational startups</h3>
+                <p>
+                    Scalable academic content and product-development support that grows with you —
+                    from first pilot cohort to thousands of learners, without hiring a writing team.
+                </p>
+                <a href="{{ route('contact') }}" class="link-arrow" style="margin-top:14px">Start lean <i data-lucide="arrow-right"></i></a>
             </div>
         </div>
     </div>
@@ -519,29 +575,34 @@
 <section class="section section--tint">
     <div class="container">
         <div class="section-head center reveal">
-            <span class="eyebrow"><i data-lucide="workflow"></i> How it works</span>
-            <h2>Four steps, no surprises</h2>
+            <span class="eyebrow"><i data-lucide="workflow"></i> Our process</span>
+            <h2>How we work — five steps, no surprises</h2>
         </div>
-        <div class="steps">
+        <div class="steps cols-5">
             <div class="step reveal">
                 <div class="step-num">01</div>
-                <h3>Blueprint</h3>
-                <p>We map your syllabus, pattern and weightage into a written plan you approve.</p>
+                <h3>Understand requirements</h3>
+                <p>We review curriculum, objectives, target audience and delivery expectations with you.</p>
             </div>
             <div class="step reveal" data-delay="1">
                 <div class="step-num">02</div>
-                <h3>Sample</h3>
-                <p>A real chapter or paper is written for you — free — so you can judge the voice.</p>
+                <h3>Academic planning</h3>
+                <p>Subject experts build content frameworks, assessment blueprints and learning outcomes — sample chapter free.</p>
             </div>
             <div class="step reveal" data-delay="2">
                 <div class="step-num">03</div>
-                <h3>Produce</h3>
-                <p>Writers execute in sprints; you get drafts you can comment on.</p>
+                <h3>Content development</h3>
+                <p>Writers and educators create engaging resources in sprints; you comment on every draft.</p>
             </div>
             <div class="step reveal" data-delay="3">
                 <div class="step-num">04</div>
-                <h3>Review &amp; deliver</h3>
-                <p>Three-tier QC, then print- or platform-ready files land on the agreed date.</p>
+                <h3>Quality assurance</h3>
+                <p>Three-tier academic, editorial and consistency review before anything ships.</p>
+            </div>
+            <div class="step reveal" data-delay="3">
+                <div class="step-num">05</div>
+                <h3>Delivery &amp; support</h3>
+                <p>Print-ready or platform-ready files on the agreed date, with revision rounds included.</p>
             </div>
         </div>
     </div>
@@ -710,6 +771,32 @@
     </div>
 </section>
 
+{{-- ============ INDIA ECOSYSTEM ============ --}}
+<section class="section">
+    <div class="container split">
+        <div class="split-media reveal">
+            <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1000&q=80"
+                 alt="An online educator developing digital course content on a laptop">
+            <div class="stamp"><b>NEP</b><span>2020-ready content</span></div>
+        </div>
+        <div class="split-body reveal" data-delay="1">
+            <span class="eyebrow"><i data-lucide="globe-2"></i> Made for India's classrooms</span>
+            <h2>Supporting India's evolving education ecosystem</h2>
+            <p class="lead" style="margin-top:14px">
+                Indian education is moving fast — digital learning, competency-based education,
+                NEP&nbsp;2020 implementation and rising demand for better assessments.
+            </p>
+            <p style="margin-top:12px">
+                AvianEdu helps schools, publishers, coaching institutes and EdTech companies keep
+                pace with academically sound content and scalable assessment solutions. Whether your
+                learners are school students, competitive-exam aspirants or lifelong learners, we
+                turn educational ideas into meaningful learning experiences — in English and Hindi.
+            </p>
+            <a href="{{ route('contact') }}" class="link-arrow" style="margin-top:18px">Talk to an academic consultant <i data-lucide="arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
 {{-- ============ TESTIMONIALS ============ --}}
 <section class="section">
     <div class="container" style="max-width:900px">
@@ -805,12 +892,12 @@
     <div class="container">
         <div class="cta-band reveal">
             <div class="cta-copy">
-                <h2>Need content built for your syllabus?</h2>
-                <p>Tell us the board, the grade and the deadline — we'll come back with a sample chapter within 48 hours. Free, obviously.</p>
+                <h2>Looking for a reliable educational content development company in India?</h2>
+                <p>Whether you're building a learning programme, launching an EdTech product or preparing students for boards and competitive exams — let's talk board, grade and deadline. Sample chapter back within 48 hours, free.</p>
             </div>
             <div class="cta-actions">
-                <a href="{{ route('contact') }}" class="btn btn-white btn-lg">Start a conversation <i data-lucide="arrow-right" class="arr"></i></a>
-                <a href="{{ route('services') }}" class="btn btn-outline-white btn-lg">Browse services</a>
+                <a href="{{ route('contact') }}" class="btn btn-white btn-lg">Talk to an academic consultant <i data-lucide="arrow-right" class="arr"></i></a>
+                <a href="{{ route('contact') }}" class="btn btn-outline-white btn-lg">Request a sample project</a>
             </div>
         </div>
     </div>

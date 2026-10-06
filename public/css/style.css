@@ -1548,3 +1548,36 @@ img.creator-photo { object-fit: cover; }
     margin-bottom: 30px;
 }
 .creator-note svg { width: 18px; height: 18px; color: var(--primary); flex: none; margin-top: 3px; }
+
+/* ---------- trust bar (homepage) ---------- */
+.trust-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--text);
+    box-shadow: var(--shadow-card);
+}
+.trust-item svg { width: 18px; height: 18px; color: var(--primary); flex: none; }
+@media (max-width: 900px) { .trust-bar { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .trust-bar { grid-template-columns: 1fr; } }
+
+/* five-step process */
+.steps.cols-5 { grid-template-columns: repeat(5, 1fr); }
+@media (max-width: 1100px) {
+    .steps.cols-5 { grid-template-columns: repeat(3, 1fr); }
+    .steps.cols-5::before { display: none; }
+}
+@media (max-width: 640px) {
+    .steps.cols-5 { grid-template-columns: 1fr; }
+}
+
+/* hero video sits behind floating cards: block right-click "save as", drag,
+   text-selection and all pointer interaction — background decoration only */
+.hero-visual video { pointer-events: none; user-select: none; -webkit-user-select: none; }
