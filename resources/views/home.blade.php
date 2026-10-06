@@ -66,6 +66,11 @@
                 <source src="{{ route('media.hero-video') }}" type="video/mp4">
             </video>
 
+            <button type="button" class="media-sound-btn" id="heroSoundBtn" aria-label="Turn video sound on" aria-pressed="false">
+                <i data-lucide="mic" class="ic-on"></i>
+                <i data-lucide="mic-off" class="ic-off"></i>
+            </button>
+
             <div class="float-card fc-1">
                 <span class="tick"><i data-lucide="badge-check"></i></span>
                 3-tier quality check
@@ -159,6 +164,10 @@
         </div>
 
         <div class="train-stage reveal">
+            <button type="button" class="media-sound-btn" id="trainSoundBtn" aria-label="Toggle train sound" aria-pressed="true">
+                <i data-lucide="mic" class="ic-on"></i>
+                <i data-lucide="mic-off" class="ic-off"></i>
+            </button>
         <div class="train-scenery" aria-hidden="true">
             <div class="scenery-row sky-a">
                 <div class="drift-track rev med">

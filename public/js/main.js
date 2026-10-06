@@ -155,29 +155,46 @@
     /* ---------- hero video: pause when hero scrolls off-screen ----------
        Sound strategy: try unmuted first (works where autoplay policy allows);
        fall back to muted so the video always plays; unlock sound on the
-       first user gesture (click / key / touch) — no visible buttons.       */
+       first user gesture; mic button gives manual on/off as a guaranteed
+       fallback where browsers block audible autoplay.                    */
     var heroVideo = document.querySelector('.hero-visual video');
     var heroSection = document.querySelector('.hero');
     var heroVisible = true;
     var heroSoundUnlocked = false;
+    var heroUserMuted = false;
+    var heroBtn = document.getElementById('heroSoundBtn');
     var heroTryPlay = function () {
         if (!heroVideo || !heroVisible || document.hidden) return;
-        if (heroSoundUnlocked && heroVideo.muted) { heroVideo.muted = false; }
+        if (heroUserMuted) {
+            /* user explicitly turned sound off — keep muted across resumes */
+            heroVideo.muted = true;
+            var pu = heroVideo.play();
+            if (pu && pu.catch) { pu.catch(function () {}); }
+            return;
+        }
+        if (heroSoundUnlocked) {
+            heroVideo.muted = false;
+            var ps = heroVideo.play();
+            if (ps && ps.catch) { ps.catch(function () {}); }
+            return;
+        }
+        /* not unlocked yet: try with sound, fall back to muted autoplay */
+        heroVideo.muted = false;
         var p = heroVideo.play();
         if (p && p.catch) {
             p.catch(function () {
-                /* autoplay with sound blocked — fall back to muted playback */
                 heroVideo.muted = true;
                 var pm = heroVideo.play();
                 if (pm && pm.catch) { pm.catch(function () {}); }
             });
         }
     };
-    var unlockHeroSound = function () {
+    var unlockHeroSound = function (e) {
         if (!heroVideo) return;
         heroSoundUnlocked = true;
-        if (heroVisible && !document.hidden && heroVideo.muted) {
-            heroVideo.muted = false; /* gesture grants permission — sound on */
+        var onBtn = e && e.target && e.target.closest && e.target.closest('.media-sound-btn');
+        if (!onBtn && !heroUserMuted && heroVisible && !document.hidden && heroVideo.muted) {
+            heroVideo.muted = false; /* first gesture anywhere → sound on */
         }
         document.removeEventListener('pointerdown', unlockHeroSound);
         document.removeEventListener('keydown', unlockHeroSound);
@@ -186,6 +203,30 @@
     document.addEventListener('pointerdown', unlockHeroSound);
     document.addEventListener('keydown', unlockHeroSound);
     document.addEventListener('touchend', unlockHeroSound);
+
+    if (heroBtn && heroVideo) {
+        var heroSyncBtn = function () {
+            var off = heroVideo.muted;
+            heroBtn.setAttribute('data-state', off ? 'off' : 'on');
+            heroBtn.setAttribute('aria-pressed', off ? 'false' : 'true');
+            heroBtn.setAttribute('aria-label', off ? 'Turn video sound on' : 'Turn video sound off');
+        };
+        heroBtn.addEventListener('click', function () {
+            if (heroVideo.muted) {
+                heroUserMuted = false;
+                heroSoundUnlocked = true;
+                heroVideo.muted = false;
+                if (heroVideo.paused) { heroTryPlay(); }
+            } else {
+                heroUserMuted = true;
+                heroVideo.muted = true;
+            }
+            heroSyncBtn();
+        });
+        heroVideo.addEventListener('volumechange', heroSyncBtn);
+        heroSyncBtn();
+    }
+
     if (heroVideo && heroSection && 'IntersectionObserver' in window) {
         var heroIO = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
@@ -213,6 +254,8 @@
     var trainSection = document.getElementById('weekly-test');
     var trainVisible = false;
     var trainRetryTimer = null;
+    var trainUserMuted = false;
+    var trainBtn = document.getElementById('trainSoundBtn');
     var trainPlay = function () {
         if (!trainSound || !trainVisible || document.hidden) return;
         var p = trainSound.play();
@@ -239,6 +282,33 @@
     };
     if (trainSound && trainSection && 'IntersectionObserver' in window) {
         trainSound.volume = 0.4;
+
+        /* mic button: toggle sound; clicking while playback is blocked also
+           forces play() — the click itself is the gesture browsers require */
+        if (trainBtn) {
+            var trainSyncBtn = function () {
+                var off = trainSound.muted;
+                trainBtn.setAttribute('data-state', off ? 'off' : 'on');
+                trainBtn.setAttribute('aria-pressed', off ? 'false' : 'true');
+                trainBtn.setAttribute('aria-label', off ? 'Turn train sound on' : 'Turn train sound off');
+            };
+            trainBtn.addEventListener('click', function () {
+                if (trainSound.muted) {
+                    trainUserMuted = false;
+                    trainSound.muted = false;
+                    if (trainVisible && trainSound.paused) {
+                        var pt = trainSound.play();
+                        if (pt && pt.catch) { pt.catch(function () {}); }
+                    }
+                } else {
+                    trainUserMuted = true;
+                    trainSound.muted = true;
+                }
+                trainSyncBtn();
+            });
+            trainSound.addEventListener('volumechange', trainSyncBtn);
+            trainSyncBtn();
+        }
 
         var trainIO = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
