@@ -40,6 +40,25 @@ class PageController extends Controller
         ]);
     }
 
+    public function mediaImage(string $image)
+    {
+        $images = [
+            'section1' => 'section1.jpeg',
+            'section2' => 'section2.jpeg',
+        ];
+
+        abort_unless(isset($images[$image]), 404);
+
+        $path = storage_path('media/images/'.$images[$image]);
+
+        abort_unless(is_file($path), 404);
+
+        return response()->file($path, [
+            'Content-Type' => 'image/jpeg',
+            'Content-Disposition' => 'inline',
+        ]);
+    }
+
     public function about()
     {
         return view('about');

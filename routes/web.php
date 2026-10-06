@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/media/hero-video', [PageController::class, 'heroVideo'])->name('media.hero-video');
 Route::get('/media/train-sound', [PageController::class, 'trainSound'])->name('media.train-sound');
+Route::get('/media/images/{image}', [PageController::class, 'mediaImage'])->name('media.image');
 
 Route::get('/about-us', [PageController::class, 'about'])->name('about');
 Route::get('/domains', [PageController::class, 'domains'])->name('domains');

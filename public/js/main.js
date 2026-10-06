@@ -152,17 +152,46 @@
         });
     }
 
-    /* ---------- hero video: pause when hero scrolls off-screen ---------- */
+    /* ---------- hero video: pause when hero scrolls off-screen ----------
+       Sound strategy: try unmuted first (works where autoplay policy allows);
+       fall back to muted so the video always plays; unlock sound on the
+       first user gesture (click / key / touch) — no visible buttons.       */
     var heroVideo = document.querySelector('.hero-visual video');
     var heroSection = document.querySelector('.hero');
     var heroVisible = true;
+    var heroSoundUnlocked = false;
+    var heroTryPlay = function () {
+        if (!heroVideo || !heroVisible || document.hidden) return;
+        if (heroSoundUnlocked && heroVideo.muted) { heroVideo.muted = false; }
+        var p = heroVideo.play();
+        if (p && p.catch) {
+            p.catch(function () {
+                /* autoplay with sound blocked — fall back to muted playback */
+                heroVideo.muted = true;
+                var pm = heroVideo.play();
+                if (pm && pm.catch) { pm.catch(function () {}); }
+            });
+        }
+    };
+    var unlockHeroSound = function () {
+        if (!heroVideo) return;
+        heroSoundUnlocked = true;
+        if (heroVisible && !document.hidden && heroVideo.muted) {
+            heroVideo.muted = false; /* gesture grants permission — sound on */
+        }
+        document.removeEventListener('pointerdown', unlockHeroSound);
+        document.removeEventListener('keydown', unlockHeroSound);
+        document.removeEventListener('touchend', unlockHeroSound);
+    };
+    document.addEventListener('pointerdown', unlockHeroSound);
+    document.addEventListener('keydown', unlockHeroSound);
+    document.addEventListener('touchend', unlockHeroSound);
     if (heroVideo && heroSection && 'IntersectionObserver' in window) {
         var heroIO = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 heroVisible = entry.isIntersecting;
                 if (heroVisible && !document.hidden) {
-                    var p = heroVideo.play();
-                    if (p && p.catch) { p.catch(function () {}); }
+                    heroTryPlay();
                 } else {
                     heroVideo.pause();
                 }
@@ -174,8 +203,7 @@
             if (document.hidden) {
                 heroVideo.pause();
             } else if (heroVisible) {
-                var p = heroVideo.play();
-                if (p && p.catch) { p.catch(function () {}); }
+                heroTryPlay();
             }
         });
     }
@@ -184,10 +212,30 @@
     var trainSound = document.getElementById('trainSound');
     var trainSection = document.getElementById('weekly-test');
     var trainVisible = false;
+    var trainRetryTimer = null;
     var trainPlay = function () {
         if (!trainSound || !trainVisible || document.hidden) return;
         var p = trainSound.play();
         if (p && p.catch) { p.catch(function () {}); } /* blocked until first user gesture */
+    };
+    var trainIsPlaying = function () {
+        return trainSound && !trainSound.paused && !trainSound.ended;
+    };
+    var trainStopRetries = function () {
+        if (trainRetryTimer) { clearInterval(trainRetryTimer); trainRetryTimer = null; }
+    };
+    /* aggressive retry: keep trying ~1x/sec while the section is on-screen
+       until playback succeeds — catches browsers that remember a granted
+       autoplay permission for this site (scroll alone then works) */
+    var trainStartRetries = function () {
+        if (trainRetryTimer || !trainVisible || document.hidden) return;
+        trainRetryTimer = setInterval(function () {
+            if (trainIsPlaying() || !trainVisible || document.hidden) {
+                trainStopRetries();
+                return;
+            }
+            trainPlay();
+        }, 1000);
     };
     if (trainSound && trainSection && 'IntersectionObserver' in window) {
         trainSound.volume = 0.4;
@@ -197,22 +245,40 @@
                 trainVisible = entry.isIntersecting;
                 if (trainVisible) {
                     trainPlay();
+                    trainStartRetries();
                 } else {
                     trainSound.pause();
+                    trainStopRetries();
                 }
             });
         }, { threshold: 0 });
         trainIO.observe(trainSection);
 
+        /* scroll-driven retries (throttled): scrolling into the section
+           fires fresh play() attempts while it is visible */
+        var trainScrollBusy = false;
+        var trainOnScroll = function () {
+            if (!trainVisible || trainIsPlaying() || trainScrollBusy) return;
+            trainScrollBusy = true;
+            trainPlay();
+            setTimeout(function () { trainScrollBusy = false; }, 500);
+        };
+        window.addEventListener('scroll', trainOnScroll, { passive: true });
+        window.addEventListener('wheel', trainOnScroll, { passive: true });
+        window.addEventListener('touchmove', trainOnScroll, { passive: true });
+
         document.addEventListener('visibilitychange', function () {
             if (document.hidden) {
                 trainSound.pause();
+                trainStopRetries();
             } else {
                 trainPlay();
+                if (trainVisible) { trainStartRetries(); }
             }
         });
 
-        /* browsers block unmuted audio until the first click / keypress */
+        /* last resort: browsers that hard-block audible autoplay until the
+           first click / keypress anywhere on the page */
         var unlockTrain = function () {
             trainPlay();
             document.removeEventListener('pointerdown', unlockTrain);

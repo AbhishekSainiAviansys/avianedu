@@ -45,11 +45,11 @@
                 <ul class="footer-contact">
                     <li>
                         <span class="ib"><i data-lucide="mail"></i></span>
-                        <span><b>Email</b><a href="mailto:hello@avianedu.in">hello@avianedu.in</a></span>
+                        <span><b>Email</b><a href="mailto:contact@aviansys-tech.com">contact@aviansys-tech.com</a></span>
                     </li>
                     <li>
                         <span class="ib"><i data-lucide="phone"></i></span>
-                        <span><b>Phone</b><a href="tel:+919876543210">+91 98765 43210</a></span>
+                        <span><b>Phone</b><a href="tel:+91 8630172681">+91 86301 72681</a></span>
                     </li>
                     <li>
                         <span class="ib"><i data-lucide="map-pin"></i></span>

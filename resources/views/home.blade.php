@@ -316,7 +316,7 @@
 <section class="section">
     <div class="container split flip">
         <div class="split-media reveal">
-            <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1000&q=80"
+            <img src="{{ route('media.image', ['image' => 'section1']) }}"
                  alt="Educators and students working through study material in a lecture hall">
             <div class="stamp"><b>3&times;</b><span>reviewed before release</span></div>
         </div>
@@ -612,7 +612,7 @@
 <section class="section">
     <div class="container split">
         <div class="split-media reveal">
-            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1000&q=80"
+            <img src="{{ route('media.image', ['image' => 'section2']) }}"
                  alt="A young student learning with colourful classroom materials">
             <div class="stamp"><b>Daily</b><span>practice builds ability</span></div>
         </div>
